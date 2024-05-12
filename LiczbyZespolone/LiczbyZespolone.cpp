@@ -17,134 +17,161 @@ class ComplexNumber
 {
 public:
     ComplexNumber() {};
-    ComplexNumber(float _x, float _y, int _i = 1) : x(_x), y(_y), i(_i) {};
-    ComplexNumber(const ComplexNumber& other) { x = other.x; y = other.y; }
+    ComplexNumber(float _real, float _imaginary) : real(_real), imaginary(_imaginary) {};
+    ComplexNumber(const ComplexNumber& other) { real = other.real; imaginary = other.imaginary; }
     ~ComplexNumber() {}
     
     ComplexNumber operator+(const ComplexNumber& other)
     {
         ComplexNumber result;
-        result.x = x + other.x;
-        result.y = y + other.y;
+        result.real = real + other.real;
+        result.imaginary = imaginary + other.imaginary;
 
         return result;
     }
 
     ComplexNumber& operator=(const ComplexNumber& other)
     {
-        x = other.x;
-        y = other.y;
-        i = other.i;
+        real = other.real;
+        imaginary = other.imaginary;
 
         return *this;
     }
 
-    ComplexNumber& operator*(const ComplexNumber& other)
+    //(a + bi)*(x + yi) = ax + ayi + bix + biyi =
+    // (ax + by*(-1)) + (ayi+ bix)
+    ComplexNumber operator*(const ComplexNumber& other)
     {
-        x = x*other.x;
-        y = y*other.y;
-        i = other.i;
+        float ax = real * other.real;
+        float ayi = real * other.imaginary;
 
-        return *this;
+        float bix = imaginary * other.real;
+
+        float by = imaginary * other.imaginary * (-1);
+      
+        ComplexNumber number;
+        number.real = ax + by;
+        number.imaginary = ayi + bix;
+
+        return number;
     }
 
-    ComplexNumber& operator/(const ComplexNumber& other)
+    //mnożenie licznika i mianownika przez sprzężenie
+    //liczby zespolonej
+    ComplexNumber operator/(const ComplexNumber& other)
     {
-        x = other.x;
-        y = other.y;
+        ComplexNumber coupling(other.real, other.imaginary * (-1));
+        
+        ComplexNumber numerator = coupling * *this;
+        ComplexNumber denominator =  coupling * other;
 
-        return *this;
+        ComplexNumber number;
+        number.real = numerator.real / denominator.real;
+        number.imaginary = numerator.imaginary / denominator.real;
+
+        return number;
     }
 
-    ComplexNumber& operator-(const ComplexNumber& other)
+    ComplexNumber operator-(const ComplexNumber& other)
     {
-        x = x * other.x;
-        y = y * other.y;
-        i = other.i;
+        ComplexNumber number;
+        number.real = real - other.real;
+        number.imaginary = imaginary - other.imaginary;
 
-        return *this;
+        return number;
     }
 
 
     void Print() 
     {
-        cout << x;
-
-        if (y > 0) {
-            cout << '+';
+        if (real != 0) {
+            cout << real;
         }
         
-        cout << y << 'i';
+        if (imaginary > 0 && real != 0) {
+            cout << '+';
+        }
+        else if (imaginary == -1) {
+            cout << '-';
+        }
+        
+        if (imaginary != -1 && imaginary != 1 && imaginary != 0) {
+            cout << imaginary;
+        }
+        
+        if (imaginary != 0) {
+            cout << 'i';
+        }
     }
 
 private:
-    float x = 0;
-    float y = 0;
-    int i = 1;
-
-    void SimplifyImaginary() 
-    {
-
-    }
+    float real = 0;
+    float imaginary = 0;
 };
+
+void TestOperation(char operationSign, ComplexNumber number1, ComplexNumber number2) {
+
+    cout << "(";
+    number1.Print();
+    cout << ")";
+
+    cout << operationSign; 
+
+    cout << "(";
+    number2.Print();
+    cout << ")";
+
+    cout << '=';
+
+    ComplexNumber numberResult;
+    switch (operationSign)
+    {
+        case '+':
+            numberResult = number1 + number2;
+            break;
+        case '-':
+            numberResult = number1 - number2;
+            break;
+        case '/':
+            numberResult = number1 / number2;
+            break;
+        case '*':
+            numberResult = number1 * number2;
+            break;
+        default:
+            numberResult = number1;
+            break;
+    }
+    
+    numberResult.Print();
+
+    cout << endl;
+}
 
 int main()
 {
-    cout << "Test print" << endl;
-    ComplexNumber number(2, 1);
-    number.Print();
-    cout << endl << "=====" << endl;
+    ComplexNumber number1(2, 3);
+    ComplexNumber number2(3, -2);
 
-    cout << "Test print z minusem" << endl;
-    number = ComplexNumber(2, -3);
-    number.Print();
-    cout << endl << "=====" << endl;
     
-
-    cout << "Test print imaginary pow number" << endl;
-    number = ComplexNumber(2, -3, 5);
-    number.Print();
+    cout << "Testing print" << endl;
+    number1.Print();
+    cout << endl << "=====" << endl;
+    number2.Print();
     cout << endl << "=====" << endl;
 
-    //dodawanie
-    cout << "Test dodawania: ";
-    ComplexNumber complex(2, 1);
-    ComplexNumber complex2(3, 4);
-    complex.Print();
-    cout << " + ";
-    complex2.Print();
-    cout << " = ";
-    number = ComplexNumber(2, 1) + ComplexNumber(3, 4);
-    number.Print();
-    cout << endl << "=====" << endl;
+    ComplexNumber copy(number1);
+    cout << "Testing copy of number1" << endl;
+    cout << "original:"; number1.Print();
+    cout << endl << "copy:"; copy.Print(); cout << endl;
 
-    //dodawanie z różnymi i
-    cout << "Test dodawania z roznymi i: ";
-    ComplexNumber complex(2, 1);
-    ComplexNumber complex2(3, 4);
-    complex.Print();
-    cout << " + ";
-    complex2.Print();
-    cout << " = ";
-    number = ComplexNumber(2, 1,2) + ComplexNumber(3, 4,5);
-    number.Print();
-    cout << endl << "=====" << endl;
-    
-    //odejmowanie
-    number = ComplexNumber(2, 1) - ComplexNumber(3, 4);
-    number.Print();
-    cout << endl << "=====" << endl;
+    TestOperation('*', number2, ComplexNumber(3,2)); //test sprzężenia = 13
 
-    //mnożenie
-    number = ComplexNumber(2, 1) * ComplexNumber(3, 4);
-    number.Print();
-    cout << endl << "=====" << endl;
-
-    //dzielenie
-    number = ComplexNumber(2, 1) / ComplexNumber(3, 4);
-    number.Print();
-    cout << endl << "=====" << endl;
-
+    TestOperation('+', number1, number2);
+    TestOperation('-', number1, number2);
+    TestOperation('*', number1, number2);
+    TestOperation('/', number1, number2); 
+    TestOperation('/', ComplexNumber(1, 8), ComplexNumber(2, 3)); //2+i
 
 }
 

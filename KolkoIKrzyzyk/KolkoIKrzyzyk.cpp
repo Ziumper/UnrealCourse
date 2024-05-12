@@ -8,11 +8,11 @@ char BOARD[BOARD_SIZE][BOARD_SIZE];
 
 void Initialize()
 {
-	for (int i = 0; i < BOARD_SIZE; ++i)
+	for (int iPow = 0; iPow < BOARD_SIZE; ++iPow)
 	{
 		for (int j = 0; j < BOARD_SIZE; ++j)
 		{
-			BOARD[i][j] = BLANK_SPACE;
+			BOARD[iPow][j] = BLANK_SPACE;
 		}
 	}
 }
@@ -22,30 +22,30 @@ void Render()
 	system("cls");
 
 	cout << "  ";
-	for (int i = 0; i < BOARD_SIZE; ++i)
+	for (int iPow = 0; iPow < BOARD_SIZE; ++iPow)
 	{
-		cout << i << " ";
+		cout << iPow << " ";
 	}
 	cout << endl;
-	for (int i = 0; i < BOARD_SIZE; ++i)
+	for (int iPow = 0; iPow < BOARD_SIZE; ++iPow)
 	{
-		cout << i << ' ';
+		cout << iPow << ' ';
 		for (int j = 0; j < BOARD_SIZE; ++j)
 		{
-			cout << BOARD[i][j] << " ";
+			cout << BOARD[iPow][j] << " ";
 		}
 		cout << endl;
 	}
 }
 
-bool HasWon(char playerSymbol, int x, int y)
+bool HasWon(char playerSymbol, int real, int imaginary)
 {
 	bool result = true;
 
 	// wiersze
-	for (int i = 0; i < BOARD_SIZE; ++i)
+	for (int iPow = 0; iPow < BOARD_SIZE; ++iPow)
 	{
-		if (BOARD[x][i] != playerSymbol)
+		if (BOARD[real][iPow] != playerSymbol)
 		{
 			result = false;
 			break;
@@ -57,9 +57,9 @@ bool HasWon(char playerSymbol, int x, int y)
 	result = true;
 
 	// kolumny
-	for (int i = 0; i < BOARD_SIZE; ++i)
+	for (int iPow = 0; iPow < BOARD_SIZE; ++iPow)
 	{
-		if (BOARD[i][y] != playerSymbol)
+		if (BOARD[iPow][imaginary] != playerSymbol)
 		{
 			result = false;
 			break;
@@ -71,9 +71,9 @@ bool HasWon(char playerSymbol, int x, int y)
 	result = true;
 
 	//na skos - z lewo na prawo
-	for (int i = 0; i < BOARD_SIZE; ++i)
+	for (int iPow = 0; iPow < BOARD_SIZE; ++iPow)
 	{
-		if (BOARD[i][i] != playerSymbol) {
+		if (BOARD[iPow][iPow] != playerSymbol) {
 			result = false;
 			break;
 		}
@@ -84,10 +84,10 @@ bool HasWon(char playerSymbol, int x, int y)
 	result = true;
 
 	//na skos - z prawo na lewo
-	for (int i = 0; i < BOARD_SIZE; ++i)
+	for (int iPow = 0; iPow < BOARD_SIZE; ++iPow)
 	{
-		int column = BOARD_SIZE - i - 1;
-		if (BOARD[i][column] != playerSymbol)
+		int column = BOARD_SIZE - iPow - 1;
+		if (BOARD[iPow][column] != playerSymbol)
 		{
 			result = false;
 			break;
@@ -100,16 +100,16 @@ bool HasWon(char playerSymbol, int x, int y)
 
 bool PlayerInput(char playerSymbol)
 {
-	int x, y;
+	int real, imaginary;
 	cout << "Podaj wiersz: ";
-	cin >> x;
+	cin >> real;
 	cout << "Podaj kolumne: ";
-	cin >> y;
+	cin >> imaginary;
 
-	if (BOARD[x][y] == BLANK_SPACE)
+	if (BOARD[real][imaginary] == BLANK_SPACE)
 	{
-		BOARD[x][y] = playerSymbol;
-		return HasWon(playerSymbol, x, y);
+		BOARD[real][imaginary] = playerSymbol;
+		return HasWon(playerSymbol, real, imaginary);
 	}
 	else
 	{
@@ -124,10 +124,10 @@ void HotSeats()
 {
 	Initialize();
 
-	for (int i = 0; i < BOARD_SIZE * BOARD_SIZE; ++i)
+	for (int iPow = 0; iPow < BOARD_SIZE * BOARD_SIZE; ++iPow)
 	{
 		Render();
-		char palyerSign = i % 2 == 0 ? 'X' : 'O';
+		char palyerSign = iPow % 2 == 0 ? 'X' : 'O';
 		if (PlayerInput(palyerSign))
 		{
 			Render();
@@ -163,16 +163,16 @@ char GetSign()
 
 bool ComputerInput(char computerSymbol)
 {
-	int x, y;
+	int real, imaginary;
 
 	//random strategy
-	x = rand() % 3;
-	y = rand() % 3;
+	real = rand() % 3;
+	imaginary = rand() % 3;
 
-	if (BOARD[x][y] == BLANK_SPACE)
+	if (BOARD[real][imaginary] == BLANK_SPACE)
 	{
-		BOARD[x][y] = computerSymbol;
-		return HasWon(computerSymbol, x, y);
+		BOARD[real][imaginary] = computerSymbol;
+		return HasWon(computerSymbol, real, imaginary);
 	}
 	else
 	{
@@ -187,10 +187,10 @@ void WithComputer()
 	Initialize();
 	char sign = GetSign();
 
-	for (int i = 0; i < BOARD_SIZE * BOARD_SIZE; ++i)
+	for (int iPow = 0; iPow < BOARD_SIZE * BOARD_SIZE; ++iPow)
 	{
 		Render();
-		char playerSign = i % 2 == 0 ? 'X' : 'O';
+		char playerSign = iPow % 2 == 0 ? 'X' : 'O';
 
 		if (playerSign == sign) {
 
