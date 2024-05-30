@@ -5,5 +5,5 @@ using namespace std;
 
 void Player::Move() 
 {
-    cout << "Player " << m_index << "is moving!" << endl;
+    cout << "Player:" << m_index << " is moving!" << endl;
 }

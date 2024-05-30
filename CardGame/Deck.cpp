@@ -38,7 +38,6 @@ void Deck::Shuffle()
 	for (int i = 0; i < m_size; ++i)
 	{
 		int otherIndex = rand() % m_size;
-		cout << "Index of shuffle:" << otherIndex << endl;
 		std::swap(m_cards[i], m_cards[otherIndex]);
 	}
 }
@@ -58,7 +57,23 @@ Card Deck::GetCard()
 
 void Deck::AddCard(Card card)
 {
+	Card temp[s_MaxDeckSize];
 
+	temp[0] = card;
+
+	for (int i = 0; i < m_size; ++i)
+	{
+		temp[i+1] = m_cards[i];
+	}
+
+	++m_size;
+
+	for (int i = 0; i < m_size; ++i)
+	{
+		m_cards[i] = temp[i];
+	}
+
+	delete[] temp;
 }
 
 bool Deck::IsEmpty()

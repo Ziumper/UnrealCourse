@@ -10,8 +10,9 @@ public:
     Hand(const Hand& other); 
     ~Hand() { delete[] m_cards; }
     Hand& operator=(const Hand& other);
-    Card* GetCardsInHand();
+    Card* GetCards();
     int GetSize() { return m_size; }
+    void RemoveCardsFromHand(const Hand& hand);
 private:
     Card* m_cards;
     int m_size;
