@@ -34,7 +34,7 @@ Card* Deck::Distribute(int amount)
 
 void Deck::Shuffle()
 {
-	srand(time(NULL)); // get current time
+	srand((unsigned int)time(NULL)); // get current time
 	for (int i = 0; i < m_size; ++i)
 	{
 		int otherIndex = rand() % m_size;
@@ -72,8 +72,6 @@ void Deck::AddCard(Card card)
 	{
 		m_cards[i] = temp[i];
 	}
-
-	delete[] temp;
 }
 
 bool Deck::IsEmpty()

@@ -11,9 +11,8 @@ using namespace std;
 class Game 
 {
     public:
-        static const int s_MaxPlayers = 4;
-
-        Game() {};
+        Game(): m_amountOfPlayers(0), m_finished(false), m_players(nullptr) {};
+        virtual ~Game() { delete[] m_players; }
 
         /**
          * Used for initialization and setup of the game resources
@@ -37,13 +36,7 @@ class Game
         */
         virtual void End();      
      protected:
-        int m_playersAmount = 0;
-        int m_humanPlayers = 0;
-        int m_computerPlayers = 0;
-        bool m_finished = false;
-        Player m_players[s_MaxPlayers];
-        
-        void CreatePlayers();
-        virtual void CreateHumanPlayer(int index);
-        virtual void CreateComputerPlayer(int index);
+        int m_amountOfPlayers;
+        bool m_finished;
+        Player** m_players;
 };

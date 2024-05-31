@@ -5,14 +5,17 @@
 class Hand {
 public:
     Hand(Card* cards, int size);
-    Hand() {};
+    Hand(): m_size(0), m_cards(nullptr) {};
     //use it for getting the copy assign 
     Hand(const Hand& other); 
-    ~Hand() { delete[] m_cards; }
+    ~Hand() { delete[] m_cards; m_size = 0; }
     Hand& operator=(const Hand& other);
-    Card* GetCards();
     int GetSize() { return m_size; }
-    void RemoveCardsFromHand(const Hand& hand);
+    Card* GetCards();
+    Card GetCard(int index);
+    int GetCardIndex(Card card);
+    void SwapCard(int index, Card card);
+    void ShowCards();
 private:
     Card* m_cards;
     int m_size;

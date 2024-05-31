@@ -1,11 +1,11 @@
 #include "Hand.h"
+#include "Deck.h"
 #include <iostream>
 
 using namespace std;
 
 Hand::Hand(Card* cards, int size): m_size(size)
 {
-    //kopia kart
     m_cards = new Card[m_size];
     for (int i = 0; i < m_size; ++i) 
     {
@@ -15,7 +15,6 @@ Hand::Hand(Card* cards, int size): m_size(size)
 
  Hand::Hand(const Hand& other) 
  {
-    delete[] m_cards;
     m_size = other.m_size;
     m_cards = new Card[m_size];
     for (int i = 0; i < m_size; ++i) 
@@ -43,40 +42,56 @@ Hand::Hand(Card* cards, int size): m_size(size)
         return *this;
 }
 
-Card* Hand::GetCards() 
+ Card* Hand::GetCards()
+ {
+     Card* cards  = new Card[m_size];
+    
+     for (int i = 0; i < m_size; ++i) 
+     {
+         cards[i] = m_cards[i];
+     }
+
+     return cards;
+ }
+
+ Card Hand::GetCard(int index)
+ {
+     if (index > -1 && index < m_size) 
+     {
+         return m_cards[index];
+     }
+
+     return Card();
+ }
+
+ int Hand::GetCardIndex(Card card)
+ {
+     for (int i = 0; i < m_size; ++i)
+     {
+         if (m_cards[i].color == card.color && m_cards[i].rank == card.rank) 
+         {
+             return i;
+         }
+     }
+
+     return -1;
+ }
+
+ void Hand::SwapCard(int index, Card card)
+ {
+     if (index > -1 && index < m_size)
+     {
+         m_cards[index] = card;
+     }
+ }
+
+ void Hand::ShowCards()
 {
-    //creating copy of cards inside hand
-    Card* cards = new Card[m_size];
     for(int i = 0; i < m_size; ++i)
     {
-        cards[i] = m_cards[i];
+        const char* colorChars = Deck::ColorToString(m_cards[i].color);
+        const char* rankChars = Deck::RankToString(m_cards[i].rank);
+        cout << i+1 <<".Color: " << colorChars << " Rank:" << rankChars << endl;
     }
-
-    return cards;
 }
 
-void Hand::RemoveCardsFromHand(const Hand& toRemove)
-{
-    int newSize = m_size - toRemove.m_size;
-
-
-    Card* newCards = new Card[newSize];
-    
-    for (int j = 0; j < toRemove.m_size; ++j)
-    {
-        for (int i = 0; i < m_size; ++i)
-        {
-            bool isDifferent = toRemove.m_cards[j].color != m_cards[i].color
-                && toRemove.m_cards[j].rank != m_cards[i].rank;
-            if (isDifferent)
-            {
-                Card card;
-                card.color = m_cards[i].color;
-                card.rank = m_cards[i].rank;
-                newCards[]
-            }
-        }
-   
-    }
-    
-}
