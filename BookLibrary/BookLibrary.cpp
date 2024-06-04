@@ -1,20 +1,90 @@
-﻿// BookLibrary.cpp : Ten plik zawiera funkcję „main”. W nim rozpoczyna się i kończy wykonywanie programu.
-//
-
+﻿#include <string>
+#include <vector>
 #include <iostream>
+
+using namespace std;
+
+class Unit {
+private:
+    string m_title;
+    string m_author;
+    string m_publicationDate;
+    string m_ISBN;
+    string m_summary;
+    vector<string> m_subjects;
+
+};
+
+class Library
+{
+public:
+    void Add();
+    void Delete();
+    void Borrow();
+    void Return();
+};
+
+enum class Action: char
+{
+    Add,
+    Exit,
+    Delete,
+    Borrow,
+    Return,
+
+    SIZE
+};
+
 
 int main()
 {
-    std::cout << "Hello World!\n";
+    cout << "Hello library v1.0!\n";
+
+    Library library;
+    Action action = Action::Add;
+    while (action != Action::Exit)
+    {
+        cout << "What would you like to do?" << endl;
+        int inputAction = 0;
+        cin >> inputAction;
+
+        action = (Action)inputAction;
+        switch (action)
+        {
+        case Action::Add:
+            library.Add();
+            break;
+        case Action::Exit:
+            break;
+        case Action::Delete:
+            library.Delete();
+            break;
+        case Action::Borrow:
+            library.Borrow();
+            break;
+        case Action::Return:
+            library.Return();
+            break;
+        case Action::SIZE:
+            break;
+        default:
+            break;
+        }
+    }
 }
 
-// Uruchomienie programu: Ctrl + F5 lub menu Debugowanie > Uruchom bez debugowania
-// Debugowanie programu: F5 lub menu Debugowanie > Rozpocznij debugowanie
+void Library::Add()
+{
+}
 
-// Porady dotyczące rozpoczynania pracy:
-//   1. Użyj okna Eksploratora rozwiązań, aby dodać pliki i zarządzać nimi
-//   2. Użyj okna programu Team Explorer, aby nawiązać połączenie z kontrolą źródła
-//   3. Użyj okna Dane wyjściowe, aby sprawdzić dane wyjściowe kompilacji i inne komunikaty
-//   4. Użyj okna Lista błędów, aby zobaczyć błędy
-//   5. Wybierz pozycję Projekt > Dodaj nowy element, aby utworzyć nowe pliki kodu, lub wybierz pozycję Projekt > Dodaj istniejący element, aby dodać istniejące pliku kodu do projektu
-//   6. Aby w przyszłości ponownie otworzyć ten projekt, przejdź do pozycji Plik > Otwórz > Projekt i wybierz plik sln
+void Library::Delete()
+{
+}
+
+void Library::Borrow()
+{
+}
+
+void Library::Return()
+{
+}
