@@ -59,12 +59,21 @@ void ConsumeNumbers()
     cout << "Entering the consumer" << endl;
     int consumerIndex = -1;
     int producedIndex = GetIndexFromSemaphore();
-    while (consumerIndex + 1 <= producedIndex || producedIndex == -1)
+    while (consumerIndex < producedIndex || producedIndex == -1)
     {
-        consumerIndex++;
-        cout << "Consumer index: " << consumerIndex << " Producer index: " << producedIndex << endl;
-        cout << "Consuming the number: " << numbers[consumerIndex] << endl;    
-        producedIndex = GetIndexFromSemaphore();
+        //here consumer index is lower then produced index so we can consume the number
+        bool canConsume = consumerIndex + 1 <= producedIndex;
+        if (canConsume) 
+        {
+            consumerIndex++;
+            cout << "Consumer index: " << consumerIndex << " Producer index: " << producedIndex << endl;
+            cout << "Consuming the number: " << numbers[consumerIndex] << endl;
+        }
+         
+        if (producedIndex == consumerIndex)
+        {
+            producedIndex = GetIndexFromSemaphore();
+        }
     };
    
     cout << "Consumer finished the job" << endl;
