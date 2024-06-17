@@ -36,7 +36,7 @@ int PokerPlayer::GetHowManyToChange()
     return 0;
 }
 
-int PokerPlayer::GetIndex()
+int PokerPlayer::GetIndexFromSemaphore()
 {
     return m_index;
 }
