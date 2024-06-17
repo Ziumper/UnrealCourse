@@ -54,7 +54,7 @@ void PokerCardGame::Update()
                     Hand hand = secondPlayer->GetHand();
                     Card* cards = hand.GetCards();
                     PokerRank rank = EvaluateCards(cards);
-                    cout << "Player with index " << secondPlayer->GetIndexFromSemaphore() << " have poker rank: " << PokerRankToString(rank) << endl;
+                    cout << "Player with index " << secondPlayer->GetIndex() << " have poker rank: " << PokerRankToString(rank) << endl;
                     hand.ShowCards();
                     if ((int)rank > maxRank)
                     {
