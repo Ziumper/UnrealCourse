@@ -8,7 +8,7 @@
 
 void Game::OnInit()
 {
-	LoadWordsFromFile("words.txt"); // Podaj nazwê pliku z list¹ s³ów
+	LoadWordsFromFile("words.txt");
 	srand(std::time(NULL));
 	int randomIndex = rand() % m_wordsPool.size();
 	m_word = m_wordsPool[randomIndex];
