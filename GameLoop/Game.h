@@ -25,5 +25,6 @@ private:
 	std::vector<bool> m_guessedLetters;
 	int m_wrongGuessCount;
 	GameState m_gameState = GameState::START;
+	const int m_gameChancesLimit = 15;
 
 };

@@ -21,7 +21,7 @@ void Game::OnInput()
 bool Game::OnUpdate(float deltaTime)
 {
 	m_gameState = GameState::UPDATE;
-	return m_wrongGuessCount == 14; //last chance
+	return m_wrongGuessCount == m_gameChancesLimit;
 }
 
 void Game::OnRender()
@@ -38,19 +38,30 @@ void Game::OnRender()
 		}
 	}
 
-	std::cout << std::endl;
+	std::cout << "Zly counter:" << m_wrongGuessCount << std::endl;
 
 	//rendering the most important part ;-) 
 	
 	switch (m_wrongGuessCount)
 	{
+	case 15:
+		std::cout << "  - - -" << std::endl;
+		std::cout << " |    | " << std::endl;
+		std::cout << " |    0 " << std::endl;
+		std::cout << " |  / | \\" << std::endl;
+		std::cout << " |    |  " << std::endl;
+		std::cout << " |   / \\ " << std::endl;
+		std::cout << " | " << std::endl;
+		std::cout << " | " << std::endl;
+		std::cout << "/ \\" << std::endl;
+		break;
 	case 14:
 		std::cout << "  - - -" << std::endl;
 		std::cout << " |    | " << std::endl;
 		std::cout << " |    0 " << std::endl;
-		std::cout << " |  /	| \\" << std::endl;
-		std::cout << " |  	| " << std::endl;
-		std::cout << " |   / \\" << std::endl;
+		std::cout << " |  / | \\" << std::endl;
+		std::cout << " |    |  " << std::endl;
+		std::cout << " |   /  " << std::endl;
 		std::cout << " | " << std::endl;
 		std::cout << " | " << std::endl;
 		std::cout << "/ \\" << std::endl;
@@ -60,8 +71,7 @@ void Game::OnRender()
 		std::cout << " |    | " << std::endl;
 		std::cout << " |    0 " << std::endl;
 		std::cout << " |  / | \\" << std::endl;
-		std::cout << " |  	| " << std::endl;
-		std::cout << " |   / " << std::endl;
+		std::cout << " |    |  " << std::endl;
 		std::cout << " | " << std::endl;
 		std::cout << " | " << std::endl;
 		std::cout << "/ \\" << std::endl;
@@ -71,7 +81,7 @@ void Game::OnRender()
 		std::cout << " |    | " << std::endl;
 		std::cout << " |    0 " << std::endl;
 		std::cout << " |  / | \\" << std::endl;
-		std::cout << " |    | " << std::endl;
+		std::cout << " |      " << std::endl;
 		std::cout << " | " << std::endl;
 		std::cout << " | " << std::endl;
 		std::cout << "/ \\" << std::endl;
@@ -80,7 +90,7 @@ void Game::OnRender()
 		std::cout << "  - - -" << std::endl;
 		std::cout << " |    | " << std::endl;
 		std::cout << " |    0 " << std::endl;
-		std::cout << " |  / | \\" << std::endl;
+		std::cout << " |  /   \\" << std::endl;
 		std::cout << " | " << std::endl;
 		std::cout << " | " << std::endl;
 		std::cout << "/ \\" << std::endl;
