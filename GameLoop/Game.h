@@ -26,5 +26,7 @@ private:
 	int m_wrongGuessCount;
 	GameState m_gameState = GameState::START;
 	const int m_gameChancesLimit = 15;
+	char m_guessCharacter;
+	int GuessedRightCount();
 
 };
