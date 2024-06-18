@@ -27,4 +27,7 @@
       <Filter>Pliki źródłowe</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="words.txt" />
+  </ItemGroup>
 </Project>

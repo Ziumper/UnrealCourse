@@ -21,12 +21,13 @@ public:
 
 private:
 	std::string m_word;
-	std::vector<std::string> m_wordsPool = { "kolor", "silnik", "wzorzec", "silnie", "kanapka" };
+	std::vector<std::string> m_wordsPool;
 	std::vector<bool> m_guessedLetters;
 	int m_wrongGuessCount;
 	GameState m_gameState = GameState::START;
 	const int m_gameChancesLimit = 15;
 	char m_guessCharacter;
 	int GuessedRightCount();
+	void LoadWordsFromFile(const std::string& filename);
 
 };

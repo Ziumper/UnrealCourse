@@ -2,9 +2,13 @@
 #include <cstdlib>
 #include <ctime>
 #include <iostream>
+#include <fstream>
+#include <string>
+#include <vector>
 
 void Game::OnInit()
 {
+	LoadWordsFromFile("words.txt"); // Podaj nazwê pliku z list¹ s³ów
 	srand(std::time(NULL));
 	int randomIndex = rand() % m_wordsPool.size();
 	m_word = m_wordsPool[randomIndex];
@@ -254,4 +258,21 @@ int Game::GuessedRightCount()
 	}
 
 	return guessedRight;
+}
+
+void Game::LoadWordsFromFile(const std::string& filename)
+{
+	std::ifstream file(filename);
+	if (file.is_open()) {
+		std::string word;
+		while (std::getline(file, word)) {
+			if (!word.empty()) {
+				m_wordsPool.push_back(word);
+			}
+		}
+		file.close();
+	}
+	else {
+		std::cerr << "Nie mo¿na otworzyæ pliku: " << filename << std::endl;
+	}
 }
